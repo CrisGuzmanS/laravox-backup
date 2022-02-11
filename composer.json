@@ -1,0 +1,26 @@
+{
+    "name": "laravox/backup",
+    "description": "Easy way to store and restore MySQL backups",
+    "keywords": [
+        "laravox",
+        "laravel",
+        "backup",
+        "store",
+        "restore",
+        "mysql"
+    ],
+    "type": "library",
+    "homepage": "https://github.com/crisguzmans/laravox-backup",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "crisguzmans",
+            "email": "cristian.guzman.contacto@gmail.com",
+            "homepage": "https://crisguzman.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "^8.0"
+    }
+}
