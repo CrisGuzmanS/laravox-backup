@@ -2,7 +2,7 @@
 
 ## 🙌 Description 
 
-This library allows you to save the current state of your database and restore it. Even, you can name those backups to have a list of the.
+This library allows you to save the current state of your database and restore it. Even, you can name those backups to have a list of them.
 
 this package is useful when you want to test a functionality that could fails and you want to restore the previous state when it was working fine easily using one command.
 
