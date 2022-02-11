@@ -14,13 +14,19 @@ this package is useful when you want to test a functionality that could fails an
 
 `php artisan backup:store`
 
-it saves the current state of your database with your APP_NAME variable
+it saves the current state of your database with your `APP_NAME` variable in your .env file
 
 `php artisan backup:store {name}`
 
 it does the same than the previous command, but stores the file with the {name} typed.
 
 `php artisan backup:restore`
+
+restore the database stored with the `APP_NAME` variable in your .env file
+
+`php artisan backup:restore {name}`
+
+restore the database stored with the `{name}`
 
 `php artisan backup:list`
 
