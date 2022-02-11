@@ -10,6 +10,17 @@ this package is useful when you want to test a functionality that could fails an
 
 1. install the package: `composer require laravox/backup`
 
+2. Add these commands in your `app/Console/Kernel.php` file:
+
+`
+protected $commands = [
+        Laravox\Backup\Console\Commands\BackupCleanCommand::class,
+        Laravox\Backup\Console\Commands\CommandsBackupStoreCommand::class,
+        Laravox\Backup\Console\Commands\CommandsBackupRestoreCommand::class,
+        Laravox\Backup\Console\Commands\BackupCleanCommand::class,
+    ];
+`
+
 ## 🙌 Commands available
 
 `php artisan backup:store`
@@ -31,3 +42,12 @@ restore the database stored with the `{name}`
 `php artisan backup:list`
 
 it shows a list of the backup stored with its names
+
+
+## 🙌 What's next?
+
+1. Overwrite the database completely. When you run a migration and you restore the database, the tables created in the migration are still alive, and this behavior should not occurs.
+
+1. Allow to clean (or remove) and specific file using the {name} parameter.
+
+1. the backup:list should not shows the extension '.sql'
