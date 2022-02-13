@@ -6,6 +6,21 @@ This library allows you to save the current state of your database and restore i
 
 this package is useful when you want to test a functionality that could fails and you want to restore the previous state when it was working fine easily using one command.
 
+Already tested in:
+
+Database | Version 
+---------- | --------
+MySQL    | ^10.1.48-MariaDB
+
+---
+**NOTE**
+
+The database user must have permissions for:
+* create the database
+* delete the database
+
+---
+
 ## 🙌 Installation steps
 
 1. install the package: `composer require laravox/backup`
@@ -48,6 +63,6 @@ it shows a list of the backup stored with its names
 
 1. Overwrite the database completely. When you run a migration and you restore the database, the tables created in the migration are still alive, and this behavior should not occurs.
 
-1. Allow to clean (or remove) and specific file using the {name} parameter.
+1. Allows to clean (or remove) and specific file using the {name} parameter.
 
 1. the backup:list should not shows the extension '.sql'
