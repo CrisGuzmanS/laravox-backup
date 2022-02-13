@@ -37,17 +37,32 @@ class BackupRestoreCommand extends Command
      */
     public function handle()
     {
+        shell_exec($this->recreateDatabaseCommand());
+        shell_exec($this->restoreDatabaseCommand());
+        return 0;
+    }
+
+    public function recreateDatabaseCommand(): string
+    {
+        $username = $this->username();
+        $password = $this->password();
+        $database = $this->database();
+
+        return "mysql "
+            . "--user='$username' "
+            . "--password='$password' "
+            . "--database='$database' "
+            . "--execute='DROP DATABASE $database; CREATE DATABASE $database;'";
+    }
+
+    public function restoreDatabaseCommand(): string
+    {
         $username = $this->username();
         $password = $this->password();
         $database = $this->database();
         $path = $this->path();
         $name = $this->name();
-
-        shell_exec(
-            "mysql -u $username -p$password $database < $path/$name.sql"
-        );
-
-        return 0;
+        return "mysql -u $username -p$password $database < $path/$name.sql";
     }
 
     private function name()
