@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravox\Backup\Console\Commands\BackupListCommand;
 use Laravox\Backup\Console\Commands\BackupRestoreCommand;
 use Laravox\Backup\Console\Commands\BackupStoreCommand;
+use Laravox\Backup\Console\Commands\BackupDeleteCommand;
 
 class BackupServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,7 @@ class BackupServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                BackupDeleteCommand::class,
                 BackupListCommand::class,
                 BackupRestoreCommand::class,
                 BackupStoreCommand::class,

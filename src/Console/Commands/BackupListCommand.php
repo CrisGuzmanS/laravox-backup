@@ -38,7 +38,12 @@ class BackupListCommand extends Command
      */
     public function handle()
     {
-        dump($this->filenames());
+
+        foreach ($this->filenames() as $filename) {
+            $this->info($filename);
+        }
+
+
         return 0;
     }
 
