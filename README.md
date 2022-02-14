@@ -25,15 +25,13 @@ The database user must have permissions for:
 
 1. install the package: `composer require laravox/backup`
 
-2. Add these commands in your `app/Console/Kernel.php` file:
-
+2. Add the BackupServiceProvider in your config./app.php:
 `
-protected $commands = [
-        Laravox\Backup\Console\Commands\BackupCleanCommand::class,
-        Laravox\Backup\Console\Commands\CommandsBackupStoreCommand::class,
-        Laravox\Backup\Console\Commands\CommandsBackupRestoreCommand::class,
-        Laravox\Backup\Console\Commands\BackupCleanCommand::class,
-    ];
+'providers' => [
+    ...
+    Laravox\Backup\BackupServiceProvider::class,
+    ...
+]
 `
 
 ## 🙌 Commands available
@@ -58,11 +56,13 @@ restore the database stored with the `{name}`
 
 it shows a list of the backup stored with its names
 
+`php artisan backup:delete --all`
+
+Delete all backups
+
 
 ## 🙌 What's next?
 
-1. Overwrite the database completely. When you run a migration and you restore the database, the tables created in the migration are still alive, and this behavior should not occurs.
-
-1. Allows to clean (or remove) and specific file using the {name} parameter.
+1. Allows to delete an specific file using the {name} parameter.
 
 1. the backup:list should not shows the extension '.sql'
