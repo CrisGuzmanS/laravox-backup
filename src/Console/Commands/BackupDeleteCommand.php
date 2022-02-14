@@ -5,14 +5,14 @@ namespace Laravox\Backup\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
-class BackupCleanCommand extends Command
+class BackupDeleteCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'backup:clean {name?}';
+    protected $signature = 'backup:delete {--A|all} {name?}';
 
     /**
      * The console command description.
@@ -38,8 +38,9 @@ class BackupCleanCommand extends Command
      */
     public function handle()
     {
-        File::cleanDirectory($this->path());
-
+        if($this->option('all')){
+            File::cleanDirectory($this->path());
+        }
         return 0;
     }
 
