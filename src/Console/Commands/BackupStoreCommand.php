@@ -2,6 +2,7 @@
 
 namespace Laravox\Backup\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -40,6 +41,8 @@ class BackupStoreCommand extends Command
     public function handle()
     {
         $username = $this->username();
+        $host = $this->host();
+        $port = $this->port();
         $password = $this->password();
         $database = $this->database();
         $path = $this->path();
@@ -47,9 +50,17 @@ class BackupStoreCommand extends Command
 
         $this->createDirectoryIfNotExist();
 
-        shell_exec(
-            "mysqldump -u $username -p$password $database > $path/$name.sql"
-        );
+        if ($this->connection() == 'mysql') {
+            shell_exec(
+                "mysqldump -u $username -p$password $database > $path/$name.sql"
+            );
+        } else if ($this->connection() == 'pgsql') {
+            shell_exec(
+                "PGPASSWORD='$password' pg_dump -U $username -h $host -p $port $database > $path/$name.sql"
+            );
+        } else {
+            throw new Exception("Connection don't supported");
+        }
 
         return 0;
     }
@@ -64,19 +75,34 @@ class BackupStoreCommand extends Command
         return $this->argument('name') ?? $this->database();
     }
 
+    private function connection()
+    {
+        return getenv("DB_CONNECTION");
+    }
+
     private function database()
     {
-        return config('database.connections.mysql.database');
+        return config('database.connections.' . $this->connection() . '.database');
     }
 
     private function password()
     {
-        return config('database.connections.mysql.password');
+        return config('database.connections.' . $this->connection() . '.password');
     }
 
     private function username()
     {
-        return config('database.connections.mysql.username');
+        return config('database.connections.' . $this->connection() . '.username');
+    }
+
+    private function host()
+    {
+        return config('database.connections.' . $this->connection() . '.host');
+    }
+
+    private function port()
+    {
+        return config('database.connections.' . $this->connection() . '.port');
     }
 
     private function path()
