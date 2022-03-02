@@ -2,10 +2,9 @@
 
 namespace Laravox\Backup\Console\Commands;
 
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravox\Backup\Strategies\StrategyFactory;
 
 class BackupStoreCommand extends Command
 {
@@ -24,6 +23,12 @@ class BackupStoreCommand extends Command
     protected $description = 'Backup the entire database';
 
     /**
+     * 
+     * 
+     */
+    protected $strategy;
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -31,6 +36,8 @@ class BackupStoreCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
+        $this->strategy = (new StrategyFactory)->handle(getenv("DB_CONNECTION"));
     }
 
     /**
@@ -40,72 +47,34 @@ class BackupStoreCommand extends Command
      */
     public function handle()
     {
-        $username = $this->username();
-        $host = $this->host();
-        $port = $this->port();
-        $password = $this->password();
-        $database = $this->database();
-        $path = $this->path();
-        $name = $this->name();
+        $this
+            ->createDirectoryIfNotExist();
 
-        $this->createDirectoryIfNotExist();
-
-        if ($this->connection() == 'mysql') {
-            shell_exec(
-                "mysqldump -u $username -p$password $database > $path/$name.sql"
-            );
-        } else if ($this->connection() == 'pgsql') {
-            shell_exec(
-                "PGPASSWORD='$password' pg_dump -U $username -h $host -p $port $database > $path/$name.sql"
-            );
-        } else {
-            throw new Exception("Connection don't supported");
-        }
+        shell_exec(
+            $this
+                ->strategy
+                ->storeBackupCommand($this->path())
+        );
 
         return 0;
     }
 
     private function createDirectoryIfNotExist()
     {
-        File::makeDirectory($this->path(), 0755, true, true);
-    }
-
-    private function name()
-    {
-        return $this->argument('name') ?? $this->database();
-    }
-
-    private function connection()
-    {
-        return getenv("DB_CONNECTION");
-    }
-
-    private function database()
-    {
-        return config('database.connections.' . $this->connection() . '.database');
-    }
-
-    private function password()
-    {
-        return config('database.connections.' . $this->connection() . '.password');
-    }
-
-    private function username()
-    {
-        return config('database.connections.' . $this->connection() . '.username');
-    }
-
-    private function host()
-    {
-        return config('database.connections.' . $this->connection() . '.host');
-    }
-
-    private function port()
-    {
-        return config('database.connections.' . $this->connection() . '.port');
+        File::makeDirectory($this->directory(), 0755, true, true);
     }
 
     private function path()
+    {
+        return $this->directory() . "/" . $this->fileName() . ".sql";
+    }
+
+    private function fileName()
+    {
+        return $this->argument('name') ?? getenv("DB_DATABASE");
+    }
+
+    private function directory()
     {
         return storage_path('app/database/backups');
     }

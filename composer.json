@@ -7,7 +7,9 @@
         "backup",
         "store",
         "restore",
-        "mysql"
+        "mysql",
+        "postgres",
+        "pgsql"
     ],
     "type": "library",
     "homepage": "https://github.com/crisguzmans/laravox-backup",

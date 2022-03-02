@@ -3,6 +3,7 @@
 namespace Laravox\Backup\Console\Commands;
 
 use Illuminate\Console\Command;
+use Laravox\Backup\Strategies\StrategyFactory;
 
 class BackupRestoreCommand extends Command
 {
@@ -21,6 +22,12 @@ class BackupRestoreCommand extends Command
     protected $description = 'Restore the entire database';
 
     /**
+     * Strategy selected to do the command
+     * 
+     */
+    protected $strategy;
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -28,6 +35,9 @@ class BackupRestoreCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
+        $this->strategy = (new StrategyFactory)
+            ->handle(getenv("DB_CONNECTION"));
     }
 
     /**
@@ -37,55 +47,37 @@ class BackupRestoreCommand extends Command
      */
     public function handle()
     {
-        shell_exec($this->recreateDatabaseCommand());
-        shell_exec($this->restoreDatabaseCommand());
+
+        // dd(
+        //     $this->strategy->recreateDatabaseCommand($this->path()),
+        //     $this->strategy->restoreDatabaseCommand($this->path())
+        // );
+
+        shell_exec(
+            $this
+                ->strategy
+                ->recreateDatabaseCommand($this->path())
+        );
+
+        shell_exec(
+            $this
+                ->strategy
+                ->restoreDatabaseCommand($this->path())
+        );
         return 0;
     }
 
-    public function recreateDatabaseCommand(): string
-    {
-        $username = $this->username();
-        $password = $this->password();
-        $database = $this->database();
-
-        return "mysql "
-            . "--user='$username' "
-            . "--password='$password' "
-            . "--database='$database' "
-            . "--execute='DROP DATABASE $database; CREATE DATABASE $database;'";
-    }
-
-    public function restoreDatabaseCommand(): string
-    {
-        $username = $this->username();
-        $password = $this->password();
-        $database = $this->database();
-        $path = $this->path();
-        $name = $this->name();
-        return "mysql -u $username -p$password $database < $path/$name.sql";
-    }
-
-    private function name()
-    {
-        return $this->argument('name') ?? $this->database();
-    }
-
-    private function database()
-    {
-        return config('database.connections.mysql.database');
-    }
-
-    private function password()
-    {
-        return config('database.connections.mysql.password');
-    }
-
-    private function username()
-    {
-        return config('database.connections.mysql.username');
-    }
-
     private function path()
+    {
+        return $this->directory() . "/" . $this->fileName() . ".sql";
+    }
+
+    private function fileName()
+    {
+        return $this->argument('name') ?? getenv("DB_DATABASE");
+    }
+
+    private function directory()
     {
         return storage_path('app/database/backups');
     }

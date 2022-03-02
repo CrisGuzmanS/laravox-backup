@@ -11,6 +11,7 @@ Already tested in:
 Database | Version 
 ---------- | --------
 MySQL    | ^10.1.48-MariaDB
+Postgres  | ^12.0
 
 ---
 **NOTE**
