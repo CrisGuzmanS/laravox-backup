@@ -43,7 +43,6 @@ class BackupListCommand extends Command
             $this->info($filename);
         }
 
-
         return 0;
     }
 
@@ -58,7 +57,9 @@ class BackupListCommand extends Command
 
     private function files(): array
     {
-        return File::allFiles($this->path());
+        return File::exists($this->path())
+            ? File::allFiles($this->path())
+            : [];
     }
 
     private function path(): string

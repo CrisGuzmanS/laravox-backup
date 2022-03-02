@@ -3,6 +3,7 @@
 namespace Laravox\Backup\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class BackupStoreCommand extends Command
@@ -44,13 +45,18 @@ class BackupStoreCommand extends Command
         $path = $this->path();
         $name = $this->name();
 
-        Storage::makeDirectory($this->path());
+        $this->createDirectoryIfNotExist();
 
         shell_exec(
             "mysqldump -u $username -p$password $database > $path/$name.sql"
         );
 
         return 0;
+    }
+
+    private function createDirectoryIfNotExist()
+    {
+        File::makeDirectory($this->path(), 0755, true, true);
     }
 
     private function name()
