@@ -42,6 +42,8 @@ class MysqlStrategy extends Strategy
             . "--user='$username' "
             . "--password='$password' "
             . "--database='$database' "
+            . "--host='$host'"
+            . "--port='$port'"
             . "--execute='DROP DATABASE $database; CREATE DATABASE $database;'";
     }
 
@@ -52,7 +54,7 @@ class MysqlStrategy extends Strategy
         $port = $this->port();
         $password = $this->password();
         $database = $this->database();
-        return "mysql -u $username -p$password $database < $path";
+        return "mysql -u $username --port $port -h $host -p$password $database < $path";
     }
 
     public function storeBackupCommand(string $path): string
@@ -62,6 +64,7 @@ class MysqlStrategy extends Strategy
         $port = $this->port();
         $password = $this->password();
         $database = $this->database();
-        return "mysqldump -u $username -p$password $database > $path";
+        
+        return "mysqldump -u $username --port $port -h $host -p$password $database > $path";
     }
 }
