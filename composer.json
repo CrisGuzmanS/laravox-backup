@@ -23,13 +23,6 @@
         }
     ],
     "require": {
-        "php": "^8.0|^7.4"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Laravox\\Backup\\BackupServiceProvider"
-            ]
-        }
+        "php": "^8.0"
     }
 }
