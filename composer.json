@@ -22,7 +22,19 @@
             "role": "Developer"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Laravox\\Backup\\": "./src/"
+        }
+    },
     "require": {
         "php": "^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravox\\Backup\\BackupServiceProvider"
+            ]
+        }
     }
 }
