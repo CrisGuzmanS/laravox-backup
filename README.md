@@ -2,16 +2,14 @@
 
 ## 🙌 Description 
 
-This library allows you to save the current state of your database and restore it. Even, you can name those backups to have a list of them.
-
-this package is useful when you want to test a functionality that could fails and you want to restore the previous state when it was working fine easily using one command.
+This library enables you to save and restore the current state of your database, allowing you to name and organize these backups for easy reference. The package proves particularly valuable when testing a functionality that may encounter failures, providing a straightforward command to effortlessly revert to a previously stable state when needed.
 
 Already tested in:
 
-Database | Version 
----------- | --------
-MySQL    | ^10.1.48-MariaDB
-Postgres  | ^12.0
+| Database | Version          |
+| -------- | ---------------- |
+| MySQL    | ^10.1.48-MariaDB |
+| Postgres | ^12.0            |
 
 ---
 **NOTE**
@@ -24,40 +22,58 @@ The database user must have permissions for:
 
 ## 🙌 Installation steps
 
-1. install the package: `composer require laravox/backup`
+1. install the package.
+```composer
+composer require laravox/backup
+```
 
-2. Add the BackupServiceProvider in your config./app.php:
-`
+2. Add the BackupServiceProvider in your `config/app.php`:
+```php
 'providers' => [
-    ...
+    //...
     Laravox\Backup\BackupServiceProvider::class,
-    ...
 ]
-`
+```
 
 ## 🙌 Commands available
 
-`php artisan backup:store`
+__NOTE:__ all files are stored in `storage/app/database/backups/`
 
-it saves the current state of your database with your `APP_NAME` variable in your .env file
+1. Store the backup:
 
-`php artisan backup:store {name}`
+```bash
+php artisan backup:store
+```
+
+it saves the current state of your database using the `APP_NAME` variable in your .env file as the name of the backup. That means: `<APP_NAME>.sql`
+
+```bash
+php artisan backup:store {name}
+```
 
 it does the same than the previous command, but stores the file with the {name} typed.
 
-`php artisan backup:restore`
+```bash
+php artisan backup:restore
+```
 
 restore the database stored with the `APP_NAME` variable in your .env file
 
-`php artisan backup:restore {name}`
+```bash
+php artisan backup:restore {name}
+```
 
 restore the database stored with the `{name}`
 
-`php artisan backup:list`
+```bash
+php artisan backup:list
+```
 
 it shows a list of the backup stored with its names
 
-`php artisan backup:delete --all`
+```bash
+php artisan backup:delete --all
+```
 
 Delete all backups
 
