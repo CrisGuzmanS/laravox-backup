@@ -47,9 +47,13 @@ php artisan backup:store
 
 it saves the current state of your database using the `APP_NAME` variable in your .env file as the name of the backup. That means: `<APP_NAME>.sql`
 
+2. Store the backup with an specific name:
+
 ```bash
 php artisan backup:store {name}
 ```
+
+3. restore the backup
 
 it does the same than the previous command, but stores the file with the {name} typed.
 
@@ -57,17 +61,23 @@ it does the same than the previous command, but stores the file with the {name} 
 php artisan backup:restore
 ```
 
+4. Restore the backup with an specific name:
+
 restore the database stored with the `APP_NAME` variable in your .env file
 
 ```bash
 php artisan backup:restore {name}
 ```
 
+5. List all backups:
+
 restore the database stored with the `{name}`
 
 ```bash
 php artisan backup:list
 ```
+
+6. Delete all backups:
 
 it shows a list of the backup stored with its names
 
