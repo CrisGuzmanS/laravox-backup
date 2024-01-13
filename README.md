@@ -27,14 +27,6 @@ The database user must have permissions for:
 composer require laravox/backup
 ```
 
-2. Add the BackupServiceProvider in your `config/app.php`:
-```php
-'providers' => [
-    //...
-    Laravox\Backup\BackupServiceProvider::class,
-]
-```
-
 ## 🙌 Commands available
 
 __NOTE:__ all files are stored in `storage/app/database/backups/`
