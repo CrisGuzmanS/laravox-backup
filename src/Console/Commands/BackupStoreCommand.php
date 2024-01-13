@@ -13,7 +13,7 @@ class BackupStoreCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:store {name?}';
+    protected $signature = 'backuppy:store {name?}';
 
     /**
      * The console command description.

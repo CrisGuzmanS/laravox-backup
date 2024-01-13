@@ -12,7 +12,7 @@ class BackupRestoreCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:restore {name?}';
+    protected $signature = 'backuppy:restore {name?}';
 
     /**
      * The console command description.

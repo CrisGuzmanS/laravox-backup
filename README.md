@@ -42,7 +42,7 @@ __NOTE:__ all files are stored in `storage/app/database/backups/`
 1. Store the backup:
 
 ```bash
-php artisan backup:store
+php artisan backuppy:store
 ```
 
 it saves the current state of your database using the `APP_NAME` variable in your .env file as the name of the backup. That means: `<APP_NAME>.sql`
@@ -50,7 +50,7 @@ it saves the current state of your database using the `APP_NAME` variable in you
 2. Store the backup with an specific name:
 
 ```bash
-php artisan backup:store {name}
+php artisan backuppy:store {name}
 ```
 
 3. restore the backup
@@ -58,7 +58,7 @@ php artisan backup:store {name}
 it does the same than the previous command, but stores the file with the {name} typed.
 
 ```bash
-php artisan backup:restore
+php artisan backuppy:restore
 ```
 
 4. Restore the backup with an specific name:
@@ -66,7 +66,7 @@ php artisan backup:restore
 restore the database stored with the `APP_NAME` variable in your .env file
 
 ```bash
-php artisan backup:restore {name}
+php artisan backuppy:restore {name}
 ```
 
 5. List all backups:
@@ -74,7 +74,7 @@ php artisan backup:restore {name}
 restore the database stored with the `{name}`
 
 ```bash
-php artisan backup:list
+php artisan backuppy:list
 ```
 
 6. Delete all backups:
@@ -82,7 +82,7 @@ php artisan backup:list
 it shows a list of the backup stored with its names
 
 ```bash
-php artisan backup:delete --all
+php artisan backuppy:delete --all
 ```
 
 Delete all backups

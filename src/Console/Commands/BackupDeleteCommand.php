@@ -12,7 +12,7 @@ class BackupDeleteCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:delete {--A|all} {name?}';
+    protected $signature = 'backuppy:delete {--A|all} {name?}';
 
     /**
      * The console command description.

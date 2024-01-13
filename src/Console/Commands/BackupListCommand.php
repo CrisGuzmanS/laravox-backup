@@ -12,7 +12,7 @@ class BackupListCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:list';
+    protected $signature = 'backuppy:list';
 
     /**
      * The console command description.
