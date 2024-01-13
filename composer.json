@@ -29,8 +29,7 @@
     },
     "require": {
         "php": "^8.0",
-        "laravel/framework": "^10.0",
-        "ext-pgsql": "*"
+        "laravel/framework": "^10.0"
     },
     "extra": {
         "laravel": {
