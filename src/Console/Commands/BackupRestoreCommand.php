@@ -47,12 +47,6 @@ class BackupRestoreCommand extends Command
      */
     public function handle()
     {
-
-        // dd(
-        //     $this->strategy->recreateDatabaseCommand($this->path()),
-        //     $this->strategy->restoreDatabaseCommand($this->path())
-        // );
-
         shell_exec(
             $this
                 ->strategy
