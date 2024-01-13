@@ -1,6 +1,6 @@
 {
     "name": "laravox/backup",
-    "description": "Easy way to store and restore MySQL backups",
+    "description": "Easy way to store and restore PostgreSQL backups",
     "keywords": [
         "laravox",
         "laravel",
